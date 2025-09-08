@@ -115,7 +115,7 @@ function applyStyle(element, text) {
 
 drawButton.addEventListener('click', function () {
   if (availableCandidates.length === 0) {
-    resultElement.textContent = "すべて選ばれました！";
+    resultElement.textContent = "ALL COMPLETED!";
     applyStyle(resultElement, "");
     return;
   }
@@ -132,6 +132,14 @@ drawButton.addEventListener('click', function () {
     resultElement.textContent = finalResult;
     applyStyle(resultElement, finalResult);
     addToHistory(finalResult); // 過去の結果に追加
+    
+    // 最後の1つだった場合、完了メッセージを表示
+    if (availableCandidates.length === 0) {
+      setTimeout(() => {
+        resultElement.textContent = "FINAL RESULT: " + finalResult + " - ALL COMPLETED!";
+        applyStyle(resultElement, finalResult);
+      }, 2000);
+    }
   }, 3000); // 最終結果を表示
 });
 
@@ -163,4 +171,3 @@ function addToHistory(result) {
     historyList.appendChild(li);
   });
 }
-
