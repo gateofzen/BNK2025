@@ -154,10 +154,10 @@ function addToHistory(result) {
     li.textContent = item;
     li.style.padding = '5px 15px';
     li.style.display = 'inline-block';
-    li.style.marginTop = '5px';
-    li.style.marginBottom = '5px';
-    li.style.marginLeft = '5px';
-    li.style.marginRight = '5px';
+    li.style.marginTop = '3px';
+    li.style.marginBottom = '3px';
+    li.style.marginLeft = '3px';
+    li.style.marginRight = '3px';
     applyStyle(li, item); // 履歴にも同じスタイルを適用
     historyList.appendChild(li);
   });
