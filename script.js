@@ -32,7 +32,7 @@ const candidates = [
     "BB1 Hous 4", "BB2 Xmas 4", "BB2 CHARLI", "BB2 RDMC", "BB2 RHCP", "BB2 JMCL", "BB2 Jeff Beck", "BB2 SIGALA", 
     "BB2 CSBW 2", "BB2 NOW 1", "BSW L&S", "BB1 GRMY 67", "BB2 BRIT 2025", "BB2 LDGG 2", "BB2 NOW 2", "BB2 10s 4", "BSL Deep 4",
     "BSW Hous 3", "BB2 Hous 7", "BSB HH 2", "L 25 FEEL", "L 25 FREE", "BSWi Hous 4", "L 25 BTM", "BB3 10s 1", "BB1 NOW 2",
-    "BSBi Deep 1",
+    "BSBi Deep 1", "BB2 Comp 7", "BB1 Hous 5", "BSL R&B 1",
   ];
   
 const resultElement = document.getElementById('result');
@@ -171,3 +171,4 @@ function addToHistory(result) {
     historyList.appendChild(li);
   });
 }
+
