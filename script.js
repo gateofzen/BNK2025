@@ -29,7 +29,7 @@ const candidates = [
     "FEEL NOW B3", "FEEL NOW B2", "FEEL NOW B1", "FEEL NOW S1", "FEEL NOW S2", "FEEL NOW S3", "FEEL NOW G1", "FEEL NOW G2", "FEEL NOW G3",
     "BB2 Hous 6", "BSW 10s 1", "BB2 GRMY 66", "L 24 FEEL", "L 24 FREE", "BB1 BRIT 2024", "BB2 Dua Lipa 2", "BSWi BMLY",
     "BSBi BMLY", "BB1 Hous 3", "BB3 Hous 4", "BB1 NOW 1", "BSL Deep 3", "BB2 10s 3", "L 24 FREE 2", "L 24 FEEL 2",
-    "BB1 Hous 4", "BB2 Xmas 4", "BB2 CHARLI", "BB2 RDMC", "BB2 RHCP", "BB2 JMCL", "BB2 Jeff Beck", "BB2 SIGALA", 
+    "BB1 Hous 4", "BB2 Xmas 4", "BB2 CHARLI", "BB2 RDMC", "BB2 RHCP", "BB2 JMCF", "BB2 Jeff Beck", "BB2 SIGALA", 
     "BB2 CSBW 2", "BB2 NOW 1", "BSW L&S", "BB1 GRMY 67", "BB2 BRIT 2025", "BB2 LDGG 2", "BB2 NOW 2", "BB2 10s 4", "BSL Deep 4",
     "BSW Hous 3", "BB2 Hous 7", "BSB HH 2", "L 25 FEEL", "L 25 FREE", "BSWi Hous 4", "L 25 BTM", "BB3 10s 1", "BB1 NOW 2",
     "BSBi Deep 1", "BB2 Comp 7", "BB1 Hous 5", "BSL R&B 1",
@@ -171,4 +171,5 @@ function addToHistory(result) {
     historyList.appendChild(li);
   });
 }
+
 
