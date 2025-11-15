@@ -33,23 +33,42 @@ const candidates = [
     "BB2 CSBW 2", "BB2 NOW 1", "BSW L&S", "BB1 GRMY 67", "BB2 BRIT 2025", "BB2 LDGG 2", "BB2 NOW 2", "BB2 10s 4", "BSL Deep 4",
     "BSW Hous 3", "BB2 Hous 7", "BSB HH 2", "L 25 FEEL", "L 25 FREE", "BSWi Hous 4", "L 25 BTM", "BB3 10s 1", "BB1 NOW 2",
     "BSBi Deep 1", "BB2 Comp 7", "BB1 Hous 5", "BSL R&B 1",
-  ];
-  
+];
+
 const resultElement = document.getElementById('result');
 const drawButton = document.getElementById('drawButton');
 const historyList = document.getElementById('historyList');
 
-let availableCandidates = [...candidates]; // 抽選可能な候補リスト
-let history = []; // 過去の結果を保存する配列
+let availableCandidates = [...candidates];
+let history = [];
+let lastGenre = null; // 前回選ばれたジャンルを保存
+
+// ジャンルを抽出する関数
+function getGenre(text) {
+  // 優先順位の高い順にチェック（より具体的なものから）
+  if (text.startsWith("FEEL NOW")) return "FEEL NOW";
+  if (text.startsWith("FEEL")) return "FEEL";
+  if (text.startsWith("L 24") || text.startsWith("L 25")) return "LIMITED";
+  if (text.startsWith("BSWi")) return "BSWi";
+  if (text.startsWith("BSBi")) return "BSBi";
+  if (text.startsWith("BSW")) return "BSW";
+  if (text.startsWith("BSB")) return "BSB";
+  if (text.startsWith("BSL")) return "BSL";
+  if (text.startsWith("BB3")) return "BB3";
+  if (text.startsWith("BB2")) return "BB2";
+  if (text.startsWith("BB1")) return "BB1";
+  if (text.includes("SP")) return "SPECIAL";
+  if (text === "BEERCYCLE") return "BEERCYCLE";
+  if (text === "SKRILLEX") return "SKRILLEX";
+  return "OTHER";
+}
 
 // 文字列に応じてスタイル（背景色と文字色）を適用する関数
 function applyStyle(element, text) {
-  // デフォルトスタイルをリセット
   element.style.background = 'transparent';
   element.style.color = 'white';
-  element.style.padding = '20px 40px'; // 帯のように見せるためのpadding
+  element.style.padding = '20px 40px';
   
-  // 優先順位の高い順にチェック
   if (text.includes("FEEL NOW G")) {
     element.style.background = '#B08A3A';
     element.style.color = 'white';
@@ -124,39 +143,61 @@ drawButton.addEventListener('click', function () {
     const randomCandidate = availableCandidates[Math.floor(Math.random() * availableCandidates.length)];
     resultElement.textContent = randomCandidate;
     applyStyle(resultElement, randomCandidate);
-  }, 150); // 0.15秒ごとにランダム候補を表示
+  }, 150);
 
   setTimeout(() => {
-    clearInterval(interval); // 3秒後にランダム表示を停止
-    const finalResult = drawRandomCandidate(); // 候補を1つ選択
+    clearInterval(interval);
+    const finalResult = drawRandomCandidate();
     resultElement.textContent = finalResult;
     applyStyle(resultElement, finalResult);
-    addToHistory(finalResult); // 過去の結果に追加
+    addToHistory(finalResult);
     
-    // 最後の1つだった場合、完了メッセージを表示
     if (availableCandidates.length === 0) {
       setTimeout(() => {
         resultElement.textContent = "FINAL RESULT: " + finalResult + " - ALL COMPLETED!";
         applyStyle(resultElement, finalResult);
       }, 2000);
     }
-  }, 3000); // 最終結果を表示
+  }, 3000);
 });
 
-// 候補をランダムに1つ選び、リストから削除
+// 候補をランダムに1つ選び、リストから削除（BB2以外のジャンル連続回避）
 function drawRandomCandidate() {
-  const index = Math.floor(Math.random() * availableCandidates.length);
-  const selectedCandidate = availableCandidates[index];
-  availableCandidates.splice(index, 1); // 選択した候補をリストから削除
+  let selectedCandidate;
+  let selectedIndex;
+  
+  // BB2以外のジャンルで前回と同じジャンルを避ける
+  if (lastGenre !== null && lastGenre !== "BB2") {
+    // 異なるジャンルの候補を抽出
+    const differentGenreCandidates = availableCandidates.filter(
+      candidate => getGenre(candidate) !== lastGenre
+    );
+    
+    // 異なるジャンルの候補がある場合はそこから選ぶ
+    if (differentGenreCandidates.length > 0) {
+      selectedCandidate = differentGenreCandidates[Math.floor(Math.random() * differentGenreCandidates.length)];
+      selectedIndex = availableCandidates.indexOf(selectedCandidate);
+    } else {
+      // 異なるジャンルがない場合（残りが全て同じジャンル）は通常通り選ぶ
+      selectedIndex = Math.floor(Math.random() * availableCandidates.length);
+      selectedCandidate = availableCandidates[selectedIndex];
+    }
+  } else {
+    // 初回、または前回がBB2の場合は通常通りランダムに選ぶ
+    selectedIndex = Math.floor(Math.random() * availableCandidates.length);
+    selectedCandidate = availableCandidates[selectedIndex];
+  }
+  
+  availableCandidates.splice(selectedIndex, 1);
+  lastGenre = getGenre(selectedCandidate); // 今回のジャンルを保存
   return selectedCandidate;
 }
 
 // 過去の結果をリストに追加し、最大5件まで表示
 function addToHistory(result) {
-  history.unshift(result); // 新しい結果を先頭に追加
-  if (history.length > 5) history.pop(); // 5件を超えたら最後の要素を削除
+  history.unshift(result);
+  if (history.length > 5) history.pop();
 
-  // リストを更新
   historyList.innerHTML = "";
   history.forEach(item => {
     const li = document.createElement('li');
@@ -167,9 +208,7 @@ function addToHistory(result) {
     li.style.marginBottom = '3px';
     li.style.marginLeft = '3px';
     li.style.marginRight = '3px';
-    applyStyle(li, item); // 履歴にも同じスタイルを適用
+    applyStyle(li, item);
     historyList.appendChild(li);
   });
 }
-
-
