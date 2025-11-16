@@ -16,7 +16,7 @@ body {
   flex-direction: column;
   height: 100vh;
   color: white;
-  position: relative; /* 左下のボタン配置のため */
+  position: relative;
 }
 .container {
   text-align: center;
@@ -64,21 +64,16 @@ body {
   position: fixed;
   left: 30px;
   bottom: 30px;
-  width: 80px;
-  height: 80px;
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-bottom: 69px solid rgba(255, 255, 255, 0.3); /* 三角形の色 */
   cursor: pointer;
-  outline: none;
-  box-shadow: none;
   transition: all 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   text-decoration: none;
-  clip-path: polygon(50% 20%, 10% 80%, 90% 80%); /* 三角形の形状 */
 }
 #linkButton:hover {
-  border-color: rgba(255, 255, 255, 0.6);
+  border-bottom-color: rgba(255, 255, 255, 0.6);
   transform: scale(1.1);
 }
