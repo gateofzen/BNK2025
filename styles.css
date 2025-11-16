@@ -59,13 +59,15 @@ body {
   margin: 3px;
 }
 
-/* 左下の△ボタン */
+/* 左下の□ボタン（目立たない） */
 #linkButton {
   position: fixed;
   left: 30px;
   bottom: 30px;
   width: 80px;
   height: 80px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* 非常に薄い境界線 */
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -73,24 +75,7 @@ body {
   display: block;
 }
 
-/* 三角形を疑似要素で作成 */
-#linkButton::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-bottom: 69px solid rgba(255, 255, 255, 0.8); /* 透明度を0.3から0.8に変更 */
-  transition: all 0.3s ease;
-}
-
-#linkButton:hover::before {
-  border-bottom-color: rgba(255, 255, 255, 1); /* ホバー時は完全に白 */
-}
-
 #linkButton:hover {
-  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.3); /* ホバー時に少し見える程度 */
+  transform: scale(1.05);
 }
