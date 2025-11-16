@@ -41,12 +41,10 @@ const historyList = document.getElementById('historyList');
 
 let availableCandidates = [...candidates];
 let history = [];
-let lastGenre = null; // 前回選ばれたジャンルを保存
-let sameGenreCount = 0; // 同じジャンルの連続回数
+let lastGenre = null;
+let sameGenreCount = 0;
 
-// ジャンルを抽出する関数
 function getGenre(text) {
-  // 優先順位の高い順にチェック（より具体的なものから）
   if (text.startsWith("FEEL NOW")) return "FEEL NOW";
   if (text.startsWith("FEEL")) return "FEEL";
   if (text.startsWith("L 24") || text.startsWith("L 25")) return "LIMITED";
@@ -64,77 +62,74 @@ function getGenre(text) {
   return "OTHER";
 }
 
-// 文字列に応じてスタイル（背景色と文字色）を適用する関数
 function applyStyle(element, text) {
-  // デフォルトスタイル
   element.style.padding = '20px 40px';
   element.style.cursor = 'pointer';
   
-  // startsWithを使って厳密にチェック（BB1, BB2, BB3を優先）
+  // setPropertyで!importantを使って強制適用
   if (text.startsWith("BB1")) {
-    element.style.background = '#FFFF66';
-    element.style.color = 'black';
+    element.style.setProperty('background', '#FFFF66', 'important');
+    element.style.setProperty('color', 'black', 'important');
   } else if (text.startsWith("BB2")) {
-    element.style.background = '#FF9933';
-    element.style.color = 'black';
+    element.style.setProperty('background', '#FF9933', 'important');
+    element.style.setProperty('color', 'black', 'important');
   } else if (text.startsWith("BB3")) {
-    element.style.background = '#FF3300';
-    element.style.color = 'black';
+    element.style.setProperty('background', '#FF3300', 'important');
+    element.style.setProperty('color', 'black', 'important');
   } else if (text.startsWith("BSBi")) {
-    element.style.background = '#336699';
-    element.style.color = '#DEFF66';
+    element.style.setProperty('background', '#336699', 'important');
+    element.style.setProperty('color', '#DEFF66', 'important');
   } else if (text.startsWith("BSB")) {
-    element.style.background = '#00CCFF';
-    element.style.color = 'black';
+    element.style.setProperty('background', '#00CCFF', 'important');
+    element.style.setProperty('color', 'black', 'important');
   } else if (text.startsWith("BSWi")) {
-    element.style.background = '#990099';
-    element.style.color = '#FFEF7F';
+    element.style.setProperty('background', '#990099', 'important');
+    element.style.setProperty('color', '#FFEF7F', 'important');
   } else if (text.startsWith("BSW")) {
-    element.style.background = '#CC66FF';
-    element.style.color = 'white';
+    element.style.setProperty('background', '#CC66FF', 'important');
+    element.style.setProperty('color', 'white', 'important');
   } else if (text.startsWith("BSL")) {
-    element.style.background = '#0000CC';
-    element.style.color = 'white';
+    element.style.setProperty('background', '#0000CC', 'important');
+    element.style.setProperty('color', 'white', 'important');
   } else if (text.includes("FEEL NOW G")) {
-    element.style.background = '#B08A3A';
-    element.style.color = 'white';
+    element.style.setProperty('background', '#B08A3A', 'important');
+    element.style.setProperty('color', 'white', 'important');
   } else if (text.includes("FEEL NOW S")) {
-    element.style.background = '#666666';
-    element.style.color = 'white';
+    element.style.setProperty('background', '#666666', 'important');
+    element.style.setProperty('color', 'white', 'important');
   } else if (text.includes("FEEL NOW B")) {
-    element.style.background = '#00121C';
-    element.style.color = 'white';
+    element.style.setProperty('background', '#00121C', 'important');
+    element.style.setProperty('color', 'white', 'important');
   } else if (text.includes("FEEL HIGH")) {
-    element.style.background = 'white';
-    element.style.color = 'black';
+    element.style.setProperty('background', 'white', 'important');
+    element.style.setProperty('color', 'black', 'important');
   } else if (text.includes("FEEL DEEP")) {
-    element.style.background = 'white';
-    element.style.color = 'black';
+    element.style.setProperty('background', 'white', 'important');
+    element.style.setProperty('color', 'black', 'important');
   } else if (text.includes("BTM")) {
-    element.style.background = '#00121C';
-    element.style.color = '#BD3EA4';
+    element.style.setProperty('background', '#00121C', 'important');
+    element.style.setProperty('color', '#BD3EA4', 'important');
   } else if (text.includes("FREE")) {
-    element.style.background = '#00121C';
-    element.style.color = '#D61C1C';
+    element.style.setProperty('background', '#00121C', 'important');
+    element.style.setProperty('color', '#D61C1C', 'important');
   } else if (text.includes("FEEL")) {
-    element.style.background = '#00121C';
-    element.style.color = '#0761F1';
+    element.style.setProperty('background', '#00121C', 'important');
+    element.style.setProperty('color', '#0761F1', 'important');
   } else if (text.includes("SP")) {
-    element.style.background = '#00121C';
-    element.style.color = 'white';
+    element.style.setProperty('background', '#00121C', 'important');
+    element.style.setProperty('color', 'white', 'important');
   } else if (text === "BEERCYCLE") {
-    element.style.background = '#7A3202';
-    element.style.color = 'white';
+    element.style.setProperty('background', '#7A3202', 'important');
+    element.style.setProperty('color', 'white', 'important');
   } else if (text === "SKRILLEX") {
-    element.style.background = 'white';
-    element.style.color = 'black';
+    element.style.setProperty('background', 'white', 'important');
+    element.style.setProperty('color', 'black', 'important');
   } else {
-    element.style.background = 'transparent';
-    element.style.color = 'white';
+    element.style.setProperty('background', 'transparent', 'important');
+    element.style.setProperty('color', 'white', 'important');
   }
 }
 
-// ビンゴ抽選を実行する関数
 function performDraw() {
   if (availableCandidates.length === 0) {
     resultElement.textContent = "ALL COMPLETED!";
@@ -164,59 +159,45 @@ function performDraw() {
   }, 3000);
 }
 
-// resultElementをクリックしたときに抽選を開始
 resultElement.addEventListener('click', performDraw);
-
-// drawButtonもそのまま使えるようにしておく（任意）
 drawButton.addEventListener('click', performDraw);
 
-// 候補をランダムに1つ選び、リストから削除（BB2は2回連続まで、他は1回のみ）
 function drawRandomCandidate() {
   let selectedCandidate;
   let selectedIndex;
   
-  // 前回のジャンルが存在する場合、連続回避ロジックを適用
   if (lastGenre !== null) {
     let needDifferentGenre = false;
     
-    // BB2の場合：2回連続までOK、3回目は別ジャンルへ
     if (lastGenre === "BB2" && sameGenreCount >= 2) {
       needDifferentGenre = true;
-    }
-    // BB2以外の場合：1回連続したら別ジャンルへ
-    else if (lastGenre !== "BB2" && sameGenreCount >= 1) {
+    } else if (lastGenre !== "BB2" && sameGenreCount >= 1) {
       needDifferentGenre = true;
     }
     
     if (needDifferentGenre) {
-      // 異なるジャンルの候補を抽出
       const differentGenreCandidates = availableCandidates.filter(
         candidate => getGenre(candidate) !== lastGenre
       );
       
-      // 異なるジャンルの候補がある場合はそこから選ぶ
       if (differentGenreCandidates.length > 0) {
         selectedCandidate = differentGenreCandidates[Math.floor(Math.random() * differentGenreCandidates.length)];
         selectedIndex = availableCandidates.indexOf(selectedCandidate);
       } else {
-        // 異なるジャンルがない場合（残りが全て同じジャンル）は通常通り選ぶ
         selectedIndex = Math.floor(Math.random() * availableCandidates.length);
         selectedCandidate = availableCandidates[selectedIndex];
       }
     } else {
-      // 連続制限に達していない場合は通常通りランダムに選ぶ
       selectedIndex = Math.floor(Math.random() * availableCandidates.length);
       selectedCandidate = availableCandidates[selectedIndex];
     }
   } else {
-    // 初回は通常通りランダムに選ぶ
     selectedIndex = Math.floor(Math.random() * availableCandidates.length);
     selectedCandidate = availableCandidates[selectedIndex];
   }
   
   availableCandidates.splice(selectedIndex, 1);
   
-  // ジャンルの連続回数を更新
   const currentGenre = getGenre(selectedCandidate);
   if (currentGenre === lastGenre) {
     sameGenreCount++;
@@ -228,7 +209,6 @@ function drawRandomCandidate() {
   return selectedCandidate;
 }
 
-// 過去の結果をリストに追加し、最大5件まで表示
 function addToHistory(result) {
   history.unshift(result);
   if (history.length > 5) history.pop();
