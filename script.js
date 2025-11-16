@@ -42,6 +42,7 @@ const historyList = document.getElementById('historyList');
 let availableCandidates = [...candidates];
 let history = [];
 let lastGenre = null; // 前回選ばれたジャンルを保存
+let sameGenreCount = 0; // 同じジャンルの連続回数
 
 // ジャンルを抽出する関数
 function getGenre(text) {
@@ -68,6 +69,7 @@ function applyStyle(element, text) {
   element.style.background = 'transparent';
   element.style.color = 'white';
   element.style.padding = '20px 40px';
+  element.style.cursor = 'pointer'; // クリック可能であることを示す
   
   if (text.includes("FEEL NOW G")) {
     element.style.background = '#B08A3A';
@@ -132,7 +134,8 @@ function applyStyle(element, text) {
   }
 }
 
-drawButton.addEventListener('click', function () {
+// ビンゴ抽選を実行する関数
+function performDraw() {
   if (availableCandidates.length === 0) {
     resultElement.textContent = "ALL COMPLETED!";
     applyStyle(resultElement, "");
@@ -159,37 +162,69 @@ drawButton.addEventListener('click', function () {
       }, 2000);
     }
   }, 3000);
-});
+}
 
-// 候補をランダムに1つ選び、リストから削除（BB2以外のジャンル連続回避）
+// resultElementをクリックしたときに抽選を開始
+resultElement.addEventListener('click', performDraw);
+
+// drawButtonもそのまま使えるようにしておく（任意）
+drawButton.addEventListener('click', performDraw);
+
+// 候補をランダムに1つ選び、リストから削除（BB2は2回連続まで、他は1回のみ）
 function drawRandomCandidate() {
   let selectedCandidate;
   let selectedIndex;
   
-  // BB2以外のジャンルで前回と同じジャンルを避ける
-  if (lastGenre !== null && lastGenre !== "BB2") {
-    // 異なるジャンルの候補を抽出
-    const differentGenreCandidates = availableCandidates.filter(
-      candidate => getGenre(candidate) !== lastGenre
-    );
+  // 前回のジャンルが存在する場合、連続回避ロジックを適用
+  if (lastGenre !== null) {
+    let needDifferentGenre = false;
     
-    // 異なるジャンルの候補がある場合はそこから選ぶ
-    if (differentGenreCandidates.length > 0) {
-      selectedCandidate = differentGenreCandidates[Math.floor(Math.random() * differentGenreCandidates.length)];
-      selectedIndex = availableCandidates.indexOf(selectedCandidate);
+    // BB2の場合：2回連続までOK、3回目は別ジャンルへ
+    if (lastGenre === "BB2" && sameGenreCount >= 2) {
+      needDifferentGenre = true;
+    }
+    // BB2以外の場合：1回連続したら別ジャンルへ
+    else if (lastGenre !== "BB2" && sameGenreCount >= 1) {
+      needDifferentGenre = true;
+    }
+    
+    if (needDifferentGenre) {
+      // 異なるジャンルの候補を抽出
+      const differentGenreCandidates = availableCandidates.filter(
+        candidate => getGenre(candidate) !== lastGenre
+      );
+      
+      // 異なるジャンルの候補がある場合はそこから選ぶ
+      if (differentGenreCandidates.length > 0) {
+        selectedCandidate = differentGenreCandidates[Math.floor(Math.random() * differentGenreCandidates.length)];
+        selectedIndex = availableCandidates.indexOf(selectedCandidate);
+      } else {
+        // 異なるジャンルがない場合（残りが全て同じジャンル）は通常通り選ぶ
+        selectedIndex = Math.floor(Math.random() * availableCandidates.length);
+        selectedCandidate = availableCandidates[selectedIndex];
+      }
     } else {
-      // 異なるジャンルがない場合（残りが全て同じジャンル）は通常通り選ぶ
+      // 連続制限に達していない場合は通常通りランダムに選ぶ
       selectedIndex = Math.floor(Math.random() * availableCandidates.length);
       selectedCandidate = availableCandidates[selectedIndex];
     }
   } else {
-    // 初回、または前回がBB2の場合は通常通りランダムに選ぶ
+    // 初回は通常通りランダムに選ぶ
     selectedIndex = Math.floor(Math.random() * availableCandidates.length);
     selectedCandidate = availableCandidates[selectedIndex];
   }
   
   availableCandidates.splice(selectedIndex, 1);
-  lastGenre = getGenre(selectedCandidate); // 今回のジャンルを保存
+  
+  // ジャンルの連続回数を更新
+  const currentGenre = getGenre(selectedCandidate);
+  if (currentGenre === lastGenre) {
+    sameGenreCount++;
+  } else {
+    sameGenreCount = 1;
+  }
+  lastGenre = currentGenre;
+  
   return selectedCandidate;
 }
 
