@@ -66,34 +66,33 @@ function getGenre(text) {
 
 // 文字列に応じてスタイル（背景色と文字色）を適用する関数
 function applyStyle(element, text) {
-  element.style.background = 'transparent';
-  element.style.color = 'white';
+  // デフォルトスタイル
   element.style.padding = '20px 40px';
-  element.style.cursor = 'pointer'; // クリック可能であることを示す
+  element.style.cursor = 'pointer';
   
-  // BB1, BB2, BB3を最初にチェック（より具体的な条件を優先）
-  if (text.includes("BB1")) {
+  // startsWithを使って厳密にチェック（BB1, BB2, BB3を優先）
+  if (text.startsWith("BB1")) {
     element.style.background = '#FFFF66';
     element.style.color = 'black';
-  } else if (text.includes("BB2")) {
+  } else if (text.startsWith("BB2")) {
     element.style.background = '#FF9933';
     element.style.color = 'black';
-  } else if (text.includes("BB3")) {
+  } else if (text.startsWith("BB3")) {
     element.style.background = '#FF3300';
     element.style.color = 'black';
-  } else if (text.includes("BSBi")) {
+  } else if (text.startsWith("BSBi")) {
     element.style.background = '#336699';
     element.style.color = '#DEFF66';
-  } else if (text.includes("BSB")) {
+  } else if (text.startsWith("BSB")) {
     element.style.background = '#00CCFF';
     element.style.color = 'black';
-  } else if (text.includes("BSWi")) {
+  } else if (text.startsWith("BSWi")) {
     element.style.background = '#990099';
     element.style.color = '#FFEF7F';
-  } else if (text.includes("BSW")) {
+  } else if (text.startsWith("BSW")) {
     element.style.background = '#CC66FF';
     element.style.color = 'white';
-  } else if (text.includes("BSL")) {
+  } else if (text.startsWith("BSL")) {
     element.style.background = '#0000CC';
     element.style.color = 'white';
   } else if (text.includes("FEEL NOW G")) {
@@ -123,15 +122,15 @@ function applyStyle(element, text) {
   } else if (text.includes("SP")) {
     element.style.background = '#00121C';
     element.style.color = 'white';
-  } else if (text.includes("ITS")) {
-    element.style.background = 'black';
-    element.style.color = 'white';
-  } else if (text.includes("BEERCYCLE")) {
+  } else if (text === "BEERCYCLE") {
     element.style.background = '#7A3202';
     element.style.color = 'white';
-  } else if (text.includes("SKRILLEX")) {
+  } else if (text === "SKRILLEX") {
     element.style.background = 'white';
     element.style.color = 'black';
+  } else {
+    element.style.background = 'transparent';
+    element.style.color = 'white';
   }
 }
 
