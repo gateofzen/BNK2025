@@ -71,42 +71,16 @@ function applyStyle(element, text) {
   element.style.padding = '20px 40px';
   element.style.cursor = 'pointer'; // クリック可能であることを示す
   
-  if (text.includes("FEEL NOW G")) {
-    element.style.background = '#B08A3A';
-    element.style.color = 'white';
-  } else if (text.includes("FEEL NOW S")) {
-    element.style.background = '#666666';
-    element.style.color = 'white';
-  } else if (text.includes("FEEL NOW B")) {
-    element.style.background = '#00121C';
-    element.style.color = 'white';
-  } else if (text.includes("FEEL HIGH")) {
-    element.style.background = 'white';
+  // BB1, BB2, BB3を最初にチェック（より具体的な条件を優先）
+  if (text.includes("BB1")) {
+    element.style.background = '#FFFF66';
     element.style.color = 'black';
-  } else if (text.includes("FEEL DEEP")) {
-    element.style.background = 'white';
+  } else if (text.includes("BB2")) {
+    element.style.background = '#FF9933';
     element.style.color = 'black';
-  } else if (text.includes("ITS")) {
-    element.style.background = 'black';
-    element.style.color = 'white';
-  } else if (text.includes("BEERCYCLE")) {
-    element.style.background = '#7A3202';
-    element.style.color = 'white';
-  } else if (text.includes("SKRILLEX")) {
-    element.style.background = 'white';
+  } else if (text.includes("BB3")) {
+    element.style.background = '#FF3300';
     element.style.color = 'black';
-  } else if (text.includes("BTM")) {
-    element.style.background = '#00121C';
-    element.style.color = '#BD3EA4';
-  } else if (text.includes("FREE")) {
-    element.style.background = '#00121C';
-    element.style.color = '#D61C1C';
-  } else if (text.includes("FEEL")) {
-    element.style.background = '#00121C';
-    element.style.color = '#0761F1';
-  } else if (text.includes("SP")) {
-    element.style.background = '#00121C';
-    element.style.color = 'white';
   } else if (text.includes("BSBi")) {
     element.style.background = '#336699';
     element.style.color = '#DEFF66';
@@ -122,14 +96,41 @@ function applyStyle(element, text) {
   } else if (text.includes("BSL")) {
     element.style.background = '#0000CC';
     element.style.color = 'white';
-  } else if (text.includes("BB3")) {
-    element.style.background = '#FF3300';
+  } else if (text.includes("FEEL NOW G")) {
+    element.style.background = '#B08A3A';
+    element.style.color = 'white';
+  } else if (text.includes("FEEL NOW S")) {
+    element.style.background = '#666666';
+    element.style.color = 'white';
+  } else if (text.includes("FEEL NOW B")) {
+    element.style.background = '#00121C';
+    element.style.color = 'white';
+  } else if (text.includes("FEEL HIGH")) {
+    element.style.background = 'white';
     element.style.color = 'black';
-  } else if (text.includes("BB2")) {
-    element.style.background = '#FF9933';
+  } else if (text.includes("FEEL DEEP")) {
+    element.style.background = 'white';
     element.style.color = 'black';
-  } else if (text.includes("BB1")) {
-    element.style.background = '#FFFF66';
+  } else if (text.includes("BTM")) {
+    element.style.background = '#00121C';
+    element.style.color = '#BD3EA4';
+  } else if (text.includes("FREE")) {
+    element.style.background = '#00121C';
+    element.style.color = '#D61C1C';
+  } else if (text.includes("FEEL")) {
+    element.style.background = '#00121C';
+    element.style.color = '#0761F1';
+  } else if (text.includes("SP")) {
+    element.style.background = '#00121C';
+    element.style.color = 'white';
+  } else if (text.includes("ITS")) {
+    element.style.background = 'black';
+    element.style.color = 'white';
+  } else if (text.includes("BEERCYCLE")) {
+    element.style.background = '#7A3202';
+    element.style.color = 'white';
+  } else if (text.includes("SKRILLEX")) {
+    element.style.background = 'white';
     element.style.color = 'black';
   }
 }
