@@ -69,8 +69,8 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
-  z-index: 1000; /* 最前面に表示 */
-  display: block; /* 確実に表示 */
+  z-index: 1000;
+  display: block;
 }
 
 /* 三角形を疑似要素で作成 */
@@ -83,12 +83,12 @@ body {
   height: 0;
   border-left: 40px solid transparent;
   border-right: 40px solid transparent;
-  border-bottom: 69px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 69px solid rgba(255, 255, 255, 0.8); /* 透明度を0.3から0.8に変更 */
   transition: all 0.3s ease;
 }
 
 #linkButton:hover::before {
-  border-bottom-color: rgba(255, 255, 255, 0.6);
+  border-bottom-color: rgba(255, 255, 255, 1); /* ホバー時は完全に白 */
 }
 
 #linkButton:hover {
