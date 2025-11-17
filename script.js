@@ -273,9 +273,14 @@ function addToHistory(result) {
   history.forEach(item => {
     const li = document.createElement('li');
     li.textContent = item;
-    applyStyle(li, item, true);
-    historyList.appendChild(li);
+    historyList.appendChild(li); // まずDOMに追加
+    
+    // DOMに追加した後でスタイルを適用
+    requestAnimationFrame(() => {
+      applyStyle(li, item, true);
+    });
   });
 }
+
 
 
