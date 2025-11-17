@@ -65,75 +65,85 @@ function getGenre(text) {
 }
 
 function applyStyle(element, text, isHistoryItem = false) {
+  // まず全てのスタイルをクリア
+  element.removeAttribute('style');
+  
   if (!isHistoryItem) {
-    element.style.padding = '20px 40px';
-    element.style.cursor = 'pointer';
+    element.style.cssText = 'padding: 20px 40px; cursor: pointer;';
   } else {
-    element.style.padding = '5px 15px';
-    element.style.display = 'inline-block';
-    element.style.margin = '3px';
+    element.style.cssText = 'padding: 5px 15px; display: inline-block; margin: 3px;';
   }
   
+  let bgColor = '';
+  let textColor = '';
+  
   if (text.substring(0, 3) === "BB1") {
-    element.style.backgroundColor = '#FFFF66';
-    element.style.color = 'black';
+    bgColor = '#FFFF66';
+    textColor = 'black';
   } else if (text.substring(0, 3) === "BB2") {
-    element.style.backgroundColor = '#FF9933';
-    element.style.color = 'black';
+    bgColor = '#FF9933';
+    textColor = 'black';
   } else if (text.substring(0, 3) === "BB3") {
-    element.style.backgroundColor = '#FF3300';
-    element.style.color = 'black';
+    bgColor = '#FF3300';
+    textColor = 'black';
   } else if (text.startsWith("BSBi")) {
-    element.style.backgroundColor = '#336699';
-    element.style.color = '#DEFF66';
+    bgColor = '#336699';
+    textColor = '#DEFF66';
   } else if (text.startsWith("BSB")) {
-    element.style.backgroundColor = '#00CCFF';
-    element.style.color = 'black';
+    bgColor = '#00CCFF';
+    textColor = 'black';
   } else if (text.startsWith("BSWi")) {
-    element.style.backgroundColor = '#990099';
-    element.style.color = '#FFEF7F';
+    bgColor = '#990099';
+    textColor = '#FFEF7F';
   } else if (text.startsWith("BSW")) {
-    element.style.backgroundColor = '#CC66FF';
-    element.style.color = 'white';
+    bgColor = '#CC66FF';
+    textColor = 'white';
   } else if (text.startsWith("BSL")) {
-    element.style.backgroundColor = '#0000CC';
-    element.style.color = 'white';
+    bgColor = '#0000CC';
+    textColor = 'white';
   } else if (text.includes("FEEL NOW G")) {
-    element.style.backgroundColor = '#B08A3A';
-    element.style.color = 'white';
+    bgColor = '#B08A3A';
+    textColor = 'white';
   } else if (text.includes("FEEL NOW S")) {
-    element.style.backgroundColor = '#666666';
-    element.style.color = 'white';
+    bgColor = '#666666';
+    textColor = 'white';
   } else if (text.includes("FEEL NOW B")) {
-    element.style.backgroundColor = '#00121C';
-    element.style.color = 'white';
+    bgColor = '#00121C';
+    textColor = 'white';
   } else if (text.includes("FEEL HIGH")) {
-    element.style.backgroundColor = 'white';
-    element.style.color = 'black';
+    bgColor = 'white';
+    textColor = 'black';
   } else if (text.includes("FEEL DEEP")) {
-    element.style.backgroundColor = 'white';
-    element.style.color = 'black';
+    bgColor = 'white';
+    textColor = 'black';
   } else if (text.includes("BTM")) {
-    element.style.backgroundColor = '#00121C';
-    element.style.color = '#BD3EA4';
+    bgColor = '#00121C';
+    textColor = '#BD3EA4';
   } else if (text.includes("FREE")) {
-    element.style.backgroundColor = '#00121C';
-    element.style.color = '#D61C1C';
+    bgColor = '#00121C';
+    textColor = '#D61C1C';
   } else if (text.includes("FEEL")) {
-    element.style.backgroundColor = '#00121C';
-    element.style.color = '#0761F1';
+    bgColor = '#00121C';
+    textColor = '#0761F1';
   } else if (text.includes("SP")) {
-    element.style.backgroundColor = '#00121C';
-    element.style.color = 'white';
+    bgColor = '#00121C';
+    textColor = 'white';
   } else if (text === "BEERCYCLE") {
-    element.style.backgroundColor = '#7A3202';
-    element.style.color = 'white';
+    bgColor = '#7A3202';
+    textColor = 'white';
   } else if (text === "SKRILLEX") {
-    element.style.backgroundColor = 'white';
-    element.style.color = 'black';
+    bgColor = 'white';
+    textColor = 'black';
   } else {
-    element.style.backgroundColor = 'transparent';
-    element.style.color = 'white';
+    bgColor = 'transparent';
+    textColor = 'white';
+  }
+  
+  // cssTextで一度に設定（より確実）
+  if (!isHistoryItem) {
+    element.style.cssText += `background-color: ${bgColor} !important; color: ${textColor} !important;`;
+  } else {
+    element.style.cssText += `background-color: ${bgColor} !important; color: ${textColor} !important;`;
   }
 }
 
@@ -255,3 +265,4 @@ function addToHistory(result) {
     historyList.appendChild(li);
   });
 }
+
