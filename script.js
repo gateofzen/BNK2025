@@ -63,77 +63,86 @@ function getGenre(text) {
 }
 
 function applyStyle(element, text, isHistoryItem = false) {
+  console.log("applyStyle called with text:", text);
+  console.log("text.startsWith('BB1'):", text.startsWith("BB1"));
+  
   // 既存のスタイルを完全にクリア
-  element.style.removeProperty('background');
-  element.style.removeProperty('color');
+  element.removeAttribute('style');
   
   if (!isHistoryItem) {
     element.style.padding = '20px 40px';
     element.style.cursor = 'pointer';
   }
   
-  // setPropertyで!importantを使って強制適用
-  if (text.startsWith("BB1")) {
-    element.style.setProperty('background', '#FFFF66', 'important');
-    element.style.setProperty('color', 'black', 'important');
-  } else if (text.startsWith("BB2")) {
-    element.style.setProperty('background', '#FF9933', 'important');
-    element.style.setProperty('color', 'black', 'important');
-  } else if (text.startsWith("BB3")) {
-    element.style.setProperty('background', '#FF3300', 'important');
-    element.style.setProperty('color', 'black', 'important');
+  // BB1, BB2, BB3を最優先でチェック
+  if (text.substring(0, 3) === "BB1") {
+    console.log("Setting BB1 style - Yellow background");
+    element.style.backgroundColor = '#FFFF66';
+    element.style.color = 'black';
+  } else if (text.substring(0, 3) === "BB2") {
+    console.log("Setting BB2 style - Orange background");
+    element.style.backgroundColor = '#FF9933';
+    element.style.color = 'black';
+  } else if (text.substring(0, 3) === "BB3") {
+    console.log("Setting BB3 style - Red background");
+    element.style.backgroundColor = '#FF3300';
+    element.style.color = 'black';
   } else if (text.startsWith("BSBi")) {
-    element.style.setProperty('background', '#336699', 'important');
-    element.style.setProperty('color', '#DEFF66', 'important');
+    element.style.backgroundColor = '#336699';
+    element.style.color = '#DEFF66';
   } else if (text.startsWith("BSB")) {
-    element.style.setProperty('background', '#00CCFF', 'important');
-    element.style.setProperty('color', 'black', 'important');
+    element.style.backgroundColor = '#00CCFF';
+    element.style.color = 'black';
   } else if (text.startsWith("BSWi")) {
-    element.style.setProperty('background', '#990099', 'important');
-    element.style.setProperty('color', '#FFEF7F', 'important');
+    element.style.backgroundColor = '#990099';
+    element.style.color = '#FFEF7F';
   } else if (text.startsWith("BSW")) {
-    element.style.setProperty('background', '#CC66FF', 'important');
-    element.style.setProperty('color', 'white', 'important');
+    element.style.backgroundColor = '#CC66FF';
+    element.style.color = 'white';
   } else if (text.startsWith("BSL")) {
-    element.style.setProperty('background', '#0000CC', 'important');
-    element.style.setProperty('color', 'white', 'important');
+    element.style.backgroundColor = '#0000CC';
+    element.style.color = 'white';
   } else if (text.includes("FEEL NOW G")) {
-    element.style.setProperty('background', '#B08A3A', 'important');
-    element.style.setProperty('color', 'white', 'important');
+    element.style.backgroundColor = '#B08A3A';
+    element.style.color = 'white';
   } else if (text.includes("FEEL NOW S")) {
-    element.style.setProperty('background', '#666666', 'important');
-    element.style.setProperty('color', 'white', 'important');
+    element.style.backgroundColor = '#666666';
+    element.style.color = 'white';
   } else if (text.includes("FEEL NOW B")) {
-    element.style.setProperty('background', '#00121C', 'important');
-    element.style.setProperty('color', 'white', 'important');
+    element.style.backgroundColor = '#00121C';
+    element.style.color = 'white';
   } else if (text.includes("FEEL HIGH")) {
-    element.style.setProperty('background', 'white', 'important');
-    element.style.setProperty('color', 'black', 'important');
+    element.style.backgroundColor = 'white';
+    element.style.color = 'black';
   } else if (text.includes("FEEL DEEP")) {
-    element.style.setProperty('background', 'white', 'important');
-    element.style.setProperty('color', 'black', 'important');
+    element.style.backgroundColor = 'white';
+    element.style.color = 'black';
   } else if (text.includes("BTM")) {
-    element.style.setProperty('background', '#00121C', 'important');
-    element.style.setProperty('color', '#BD3EA4', 'important');
+    element.style.backgroundColor = '#00121C';
+    element.style.color = '#BD3EA4';
   } else if (text.includes("FREE")) {
-    element.style.setProperty('background', '#00121C', 'important');
-    element.style.setProperty('color', '#D61C1C', 'important');
+    element.style.backgroundColor = '#00121C';
+    element.style.color = '#D61C1C';
   } else if (text.includes("FEEL")) {
-    element.style.setProperty('background', '#00121C', 'important');
-    element.style.setProperty('color', '#0761F1', 'important');
+    element.style.backgroundColor = '#00121C';
+    element.style.color = '#0761F1';
   } else if (text.includes("SP")) {
-    element.style.setProperty('background', '#00121C', 'important');
-    element.style.setProperty('color', 'white', 'important');
+    element.style.backgroundColor = '#00121C';
+    element.style.color = 'white';
   } else if (text === "BEERCYCLE") {
-    element.style.setProperty('background', '#7A3202', 'important');
-    element.style.setProperty('color', 'white', 'important');
+    element.style.backgroundColor = '#7A3202';
+    element.style.color = 'white';
   } else if (text === "SKRILLEX") {
-    element.style.setProperty('background', 'white', 'important');
-    element.style.setProperty('color', 'black', 'important');
+    console.log("Setting SKRILLEX style - White background");
+    element.style.backgroundColor = 'white';
+    element.style.color = 'black';
   } else {
-    element.style.setProperty('background', 'transparent', 'important');
-    element.style.setProperty('color', 'white', 'important');
+    element.style.backgroundColor = 'transparent';
+    element.style.color = 'white';
   }
+  
+  console.log("Final background color:", element.style.backgroundColor);
+  console.log("Final color:", element.style.color);
 }
 
 function performDraw() {
