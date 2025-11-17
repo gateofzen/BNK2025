@@ -1,4 +1,15 @@
-"BB2 Rock 2", "BB2 Movie 1", "BB2 Movie 2", "BB2 MTGX", "BB2 P!NK", "BB2 PTX", "BB2 QOP 1", "BB2 Queen",
+const candidates = [
+    "BB1 10s 1", "BB1 10s 2", "BB1 90s 1", "BB1 Comp 1", "BB1 Comp 2", "BB1 Comp 3", "BB1 Comp 4", "BB1 Hit 1",
+    "BB1 Hit 2", "BB1 Hit 3", "BB1 Hit 4", "BB1 Hit 5", "BB1 Hit 6", "BB1 Hit 7", "BB1 Hit 8", "BB1 Hit 9", "BB1 Hit 10",
+    "BB1 Hit 11", "BB1 Hous 1", "BB1 Hous 2", "BB1 DVGT", "BB1 Queen", "BB1 TSFT", "BB1 GRMY 65", "BB2 10s 1",
+    "BB2 10s 2", "BB2 Hit 1", "BB2 Hit 2", "BB2 Hit 3", "BB2 Hit 4", "BB2 Hit 5", "BB2 Hit 6", "BB2 Hit 7", "BB2 Hit 8",
+    "BB2 Hit 9", "BB2 Hit 10", "BB2 Hit 11", "BB2 Hit 12", "BB2 Hit 13", "BB2 Hit 14", "BB2 Hit 15", "BB2 Hit 16",
+    "BB2 Hit 17", "BB2 Hit 18", "BB2 Hit 19", "BB2 Hit 20", "BB2 Hit 21", "BB2 Hit 22", "BB2 Comp 1", "BB2 Comp 2",
+    "BB2 Comp 3", "BB2 Comp 4", "BB2 Comp 5", "BB2 Comp 6", "BB2 90s 1", "BB2 90s 2", "BB2 UPGD 1", "BB2 UPGD 2",
+    "BB2 UPGD 3", "BB2 HH 1", "BB2 HH 2", "BB2 Hous 1", "BB2 Hous 2", "BB2 Hous 3", "BB2 Hous 4", "BB2 Metal 1",
+    "BB2 Metal 2", "BB2 Jazz 1", "BB2 Deep 1", "BB2 Deep 2", "BB2 Deep 3", "BB2 JONAS", "BB2 JUSTIN", "BB2 MDNA",
+    "BB2 MJ 1", "BB2 MJ 2", "BB2 MJ 3", "BB2 MLN 1", "BB2 MLN 2", "BB2 MLN 3", "BB2 Soul 1", "BB2 Soul 2", "BB2 Rock 1",
+    "BB2 Rock 2", "BB2 Movie 1", "BB2 Movie 2", "BB2 MTGX", "BB2 P!NK", "BB2 PTX", "BB2 QOP 1", "BB2 Queen",
     "BB2 Regg 1", "BB2 Regg 2", "BB2 RHNA", "BB2 SUMR 1", "BB2 SUMR 2", "BB2 Xmas 1", "BB2 Xmas 2", "BB2 Xmas 3",
     "BB2 BTLS 1", "BB2 BTLS 2", "BB2 BTLS 3", "BB2 ARGD", "BB2 ADELE", "BB2 BEYONCE", "BB2 BRJ", "BB2 BRMS",
     "BB2 BMLY", "BB2 Avicii", "BB2 DVGT", "BB2 EDM", "BB2 FLG", "BB2 GRDY", "BB2 ZEDD", "BB2 1D", "BB2 BNJV",
@@ -127,15 +138,24 @@ function applyStyle(element, text, isHistoryItem = false) {
 }
 
 function performDraw() {
-  if (isAnimating) return;
+  console.log("performDraw called, isAnimating:", isAnimating);
+  
+  if (isAnimating) {
+    console.log("Already animating, returning");
+    return;
+  }
+  
   if (availableCandidates.length === 0) {
+    console.log("No candidates left");
     resultElement.textContent = "ALL COMPLETED!";
     applyStyle(resultElement, "");
     return;
   }
 
   isAnimating = true;
+  console.log("Drawing random candidate...");
   const finalResult = drawRandomCandidate();
+  console.log("Final result selected:", finalResult);
 
   animationInterval = setInterval(() => {
     const randomCandidate = availableCandidates[Math.floor(Math.random() * availableCandidates.length)];
@@ -144,20 +164,19 @@ function performDraw() {
   }, 150);
 
   setTimeout(() => {
-    // アニメーションを完全に停止
+    console.log("Stopping animation...");
     if (animationInterval) {
       clearInterval(animationInterval);
       animationInterval = null;
     }
     
-    // 200ms待ってから最終結果を強制的に設定
     setTimeout(() => {
-      // 最終結果を複数回設定して確実に表示
+      console.log("Setting final result:", finalResult);
       resultElement.textContent = finalResult;
       applyStyle(resultElement, finalResult);
       
-      // requestAnimationFrameで次のフレームでも設定
       requestAnimationFrame(() => {
+        console.log("requestAnimationFrame - setting final result again:", finalResult);
         resultElement.textContent = finalResult;
         applyStyle(resultElement, finalResult);
         addToHistory(finalResult);
