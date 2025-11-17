@@ -63,6 +63,10 @@ function getGenre(text) {
 }
 
 function applyStyle(element, text, isHistoryItem = false) {
+  // 既存のスタイルを完全にクリア
+  element.style.removeProperty('background');
+  element.style.removeProperty('color');
+  
   if (!isHistoryItem) {
     element.style.padding = '20px 40px';
     element.style.cursor = 'pointer';
@@ -225,7 +229,7 @@ function addToHistory(result) {
     li.style.marginBottom = '3px';
     li.style.marginLeft = '3px';
     li.style.marginRight = '3px';
-    applyStyle(li, item, true); // isHistoryItem = true を追加
+    applyStyle(li, item, true);
     historyList.appendChild(li);
   });
 }
