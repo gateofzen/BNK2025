@@ -26,7 +26,6 @@ body {
   font-weight: bold;
   margin-bottom: 50px;
   display: inline-block;
-  /* transition を完全に削除 */
 }
 #drawButton {
   width: 80px;
@@ -55,11 +54,9 @@ body {
   margin: 0;
 }
 #historyList li {
-  /* transition を完全に削除 */
   margin: 3px;
 }
 
-/* 左下の□ボタン（目立たない） */
 #linkButton {
   position: fixed;
   left: 30px;
