@@ -63,9 +63,6 @@ function getGenre(text) {
 }
 
 function applyStyle(element, text, isHistoryItem = false) {
-  console.log("applyStyle called with text:", text);
-  console.log("text.startsWith('BB1'):", text.startsWith("BB1"));
-  
   // 既存のスタイルを完全にクリア
   element.removeAttribute('style');
   
@@ -76,15 +73,12 @@ function applyStyle(element, text, isHistoryItem = false) {
   
   // BB1, BB2, BB3を最優先でチェック
   if (text.substring(0, 3) === "BB1") {
-    console.log("Setting BB1 style - Yellow background");
     element.style.backgroundColor = '#FFFF66';
     element.style.color = 'black';
   } else if (text.substring(0, 3) === "BB2") {
-    console.log("Setting BB2 style - Orange background");
     element.style.backgroundColor = '#FF9933';
     element.style.color = 'black';
   } else if (text.substring(0, 3) === "BB3") {
-    console.log("Setting BB3 style - Red background");
     element.style.backgroundColor = '#FF3300';
     element.style.color = 'black';
   } else if (text.startsWith("BSBi")) {
@@ -133,16 +127,12 @@ function applyStyle(element, text, isHistoryItem = false) {
     element.style.backgroundColor = '#7A3202';
     element.style.color = 'white';
   } else if (text === "SKRILLEX") {
-    console.log("Setting SKRILLEX style - White background");
     element.style.backgroundColor = 'white';
     element.style.color = 'black';
   } else {
     element.style.backgroundColor = 'transparent';
     element.style.color = 'white';
   }
-  
-  console.log("Final background color:", element.style.backgroundColor);
-  console.log("Final color:", element.style.color);
 }
 
 function performDraw() {
@@ -152,30 +142,30 @@ function performDraw() {
     return;
   }
 
-  let animationRunning = true;  // アニメーション実行中フラグ
+  // 最終結果を先に決定
+  const finalResult = drawRandomCandidate();
 
   let interval = setInterval(() => {
-    if (animationRunning) {  // アニメーション実行中のみ更新
-      const randomCandidate = availableCandidates[Math.floor(Math.random() * availableCandidates.length)];
-      resultElement.textContent = randomCandidate;
-      applyStyle(resultElement, randomCandidate);
-    }
+    const randomCandidate = availableCandidates[Math.floor(Math.random() * availableCandidates.length)];
+    resultElement.textContent = randomCandidate;
+    applyStyle(resultElement, randomCandidate);
   }, 150);
 
   setTimeout(() => {
-    animationRunning = false;  // アニメーションを停止
     clearInterval(interval);
-    const finalResult = drawRandomCandidate();
-    resultElement.textContent = finalResult;
-    applyStyle(resultElement, finalResult);
-    addToHistory(finalResult);
-    
-    if (availableCandidates.length === 0) {
-      setTimeout(() => {
-        resultElement.textContent = "FINAL RESULT: " + finalResult + " - ALL COMPLETED!";
-        applyStyle(resultElement, finalResult);
-      }, 2000);
-    }
+    // 少し待ってから最終結果を表示（clearIntervalが完全に停止するのを確実にする）
+    setTimeout(() => {
+      resultElement.textContent = finalResult;
+      applyStyle(resultElement, finalResult);
+      addToHistory(finalResult);
+      
+      if (availableCandidates.length === 0) {
+        setTimeout(() => {
+          resultElement.textContent = "FINAL RESULT: " + finalResult + " - ALL COMPLETED!";
+          applyStyle(resultElement, finalResult);
+        }, 2000);
+      }
+    }, 50);
   }, 3000);
 }
 
