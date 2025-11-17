@@ -65,6 +65,10 @@ function getGenre(text) {
 }
 
 function applyStyle(element, text, isHistoryItem = false) {
+  console.log("=== applyStyle START ===");
+  console.log("text:", text);
+  console.log("text.substring(0, 3):", text.substring(0, 3));
+  
   // まず全てのスタイルをクリア
   element.removeAttribute('style');
   
@@ -78,6 +82,7 @@ function applyStyle(element, text, isHistoryItem = false) {
   let textColor = '';
   
   if (text.substring(0, 3) === "BB1") {
+    console.log("MATCHED BB1!");
     bgColor = '#FFFF66';
     textColor = 'black';
   } else if (text.substring(0, 3) === "BB2") {
@@ -139,12 +144,19 @@ function applyStyle(element, text, isHistoryItem = false) {
     textColor = 'white';
   }
   
+  console.log("bgColor:", bgColor);
+  console.log("textColor:", textColor);
+  
   // cssTextで一度に設定（より確実）
   if (!isHistoryItem) {
     element.style.cssText += `background-color: ${bgColor} !important; color: ${textColor} !important;`;
   } else {
     element.style.cssText += `background-color: ${bgColor} !important; color: ${textColor} !important;`;
   }
+  
+  console.log("Applied cssText:", element.style.cssText);
+  console.log("Computed background-color:", window.getComputedStyle(element).backgroundColor);
+  console.log("=== applyStyle END ===");
 }
 
 function performDraw() {
@@ -265,4 +277,5 @@ function addToHistory(result) {
     historyList.appendChild(li);
   });
 }
+
 
