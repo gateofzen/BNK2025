@@ -152,13 +152,18 @@ function performDraw() {
     return;
   }
 
+  let animationRunning = true;  // アニメーション実行中フラグ
+
   let interval = setInterval(() => {
-    const randomCandidate = availableCandidates[Math.floor(Math.random() * availableCandidates.length)];
-    resultElement.textContent = randomCandidate;
-    applyStyle(resultElement, randomCandidate);
+    if (animationRunning) {  // アニメーション実行中のみ更新
+      const randomCandidate = availableCandidates[Math.floor(Math.random() * availableCandidates.length)];
+      resultElement.textContent = randomCandidate;
+      applyStyle(resultElement, randomCandidate);
+    }
   }, 150);
 
   setTimeout(() => {
+    animationRunning = false;  // アニメーションを停止
     clearInterval(interval);
     const finalResult = drawRandomCandidate();
     resultElement.textContent = finalResult;
