@@ -26,7 +26,7 @@ body {
   font-weight: bold;
   margin-bottom: 50px;
   display: inline-block;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */ /* 一時的にコメントアウト */
 }
 #drawButton {
   width: 80px;
@@ -55,7 +55,7 @@ body {
   margin: 0;
 }
 #historyList li {
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */ /* 一時的にコメントアウト */
   margin: 3px;
 }
 
@@ -67,7 +67,7 @@ body {
   width: 80px;
   height: 80px;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1); /* 非常に薄い境界線 */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -76,6 +76,6 @@ body {
 }
 
 #linkButton:hover {
-  border-color: rgba(255, 255, 255, 0.3); /* ホバー時に少し見える程度 */
+  border-color: rgba(255, 255, 255, 0.3);
   transform: scale(1.05);
 }
