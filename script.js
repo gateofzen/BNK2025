@@ -43,6 +43,7 @@ let availableCandidates = [...candidates];
 let history = [];
 let lastGenre = null;
 let sameGenreCount = 0;
+let isAnimating = false; // アニメーション中フラグ
 
 function getGenre(text) {
   if (text.startsWith("FEEL NOW")) return "FEEL NOW";
@@ -63,15 +64,15 @@ function getGenre(text) {
 }
 
 function applyStyle(element, text, isHistoryItem = false) {
-  // 既存のスタイルを完全にクリア
-  element.removeAttribute('style');
-  
   if (!isHistoryItem) {
     element.style.padding = '20px 40px';
     element.style.cursor = 'pointer';
+  } else {
+    element.style.padding = '5px 15px';
+    element.style.display = 'inline-block';
+    element.style.margin = '3px';
   }
   
-  // BB1, BB2, BB3を最優先でチェック
   if (text.substring(0, 3) === "BB1") {
     element.style.backgroundColor = '#FFFF66';
     element.style.color = 'black';
@@ -136,13 +137,14 @@ function applyStyle(element, text, isHistoryItem = false) {
 }
 
 function performDraw() {
+  if (isAnimating) return; // 既にアニメーション中なら無視
   if (availableCandidates.length === 0) {
     resultElement.textContent = "ALL COMPLETED!";
     applyStyle(resultElement, "");
     return;
   }
 
-  // 最終結果を先に決定
+  isAnimating = true;
   const finalResult = drawRandomCandidate();
 
   let interval = setInterval(() => {
@@ -153,11 +155,12 @@ function performDraw() {
 
   setTimeout(() => {
     clearInterval(interval);
-    // 少し待ってから最終結果を表示（clearIntervalが完全に停止するのを確実にする）
+    // 100ms待ってから最終結果を表示
     setTimeout(() => {
       resultElement.textContent = finalResult;
       applyStyle(resultElement, finalResult);
       addToHistory(finalResult);
+      isAnimating = false;
       
       if (availableCandidates.length === 0) {
         setTimeout(() => {
@@ -165,7 +168,7 @@ function performDraw() {
           applyStyle(resultElement, finalResult);
         }, 2000);
       }
-    }, 50);
+    }, 100);
   }, 3000);
 }
 
@@ -227,12 +230,6 @@ function addToHistory(result) {
   history.forEach(item => {
     const li = document.createElement('li');
     li.textContent = item;
-    li.style.padding = '5px 15px';
-    li.style.display = 'inline-block';
-    li.style.marginTop = '3px';
-    li.style.marginBottom = '3px';
-    li.style.marginLeft = '3px';
-    li.style.marginRight = '3px';
     applyStyle(li, item, true);
     historyList.appendChild(li);
   });
