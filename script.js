@@ -71,19 +71,14 @@ function applyStyle(element, text, isHistoryItem = false) {
   
   // まず全てのスタイルをクリア
   element.removeAttribute('style');
-  
-  if (!isHistoryItem) {
-    element.style.cssText = 'padding: 20px 40px; cursor: pointer;';
-  } else {
-    element.style.cssText = 'padding: 5px 15px; display: inline-block; margin: 3px;';
-  }
+  element.removeAttribute('class');
   
   let bgColor = '';
   let textColor = '';
   
   if (text.substring(0, 3) === "BB1") {
     console.log("MATCHED BB1!");
-    bgColor = '#FFFF66';
+    bgColor = '#FFFF00';  // 最も明るい黄色
     textColor = 'black';
   } else if (text.substring(0, 3) === "BB2") {
     bgColor = '#FF9933';
@@ -147,12 +142,23 @@ function applyStyle(element, text, isHistoryItem = false) {
   console.log("bgColor:", bgColor);
   console.log("textColor:", textColor);
   
-  // cssTextで一度に設定（より確実）
+  // Fully Kiosk Browser用：スタイルを個別に設定
   if (!isHistoryItem) {
-    element.style.cssText += `background-color: ${bgColor} !important; color: ${textColor} !important;`;
+    element.style.setProperty('padding', '20px 40px', 'important');
+    element.style.setProperty('cursor', 'pointer', 'important');
   } else {
-    element.style.cssText += `background-color: ${bgColor} !important; color: ${textColor} !important;`;
+    element.style.setProperty('padding', '5px 15px', 'important');
+    element.style.setProperty('display', 'inline-block', 'important');
+    element.style.setProperty('margin', '3px', 'important');
   }
+  
+  element.style.setProperty('background-color', bgColor, 'important');
+  element.style.setProperty('color', textColor, 'important');
+  
+  // 強制的に再描画をトリガー（Fully Kiosk Browser用）
+  element.style.display = 'none';
+  element.offsetHeight; // 強制リフロー
+  element.style.display = isHistoryItem ? 'inline-block' : 'inline-block';
   
   console.log("Applied cssText:", element.style.cssText);
   console.log("Computed background-color:", window.getComputedStyle(element).backgroundColor);
@@ -281,6 +287,7 @@ function addToHistory(result) {
     });
   });
 }
+
 
 
 
