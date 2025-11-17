@@ -62,9 +62,11 @@ function getGenre(text) {
   return "OTHER";
 }
 
-function applyStyle(element, text) {
-  element.style.padding = '20px 40px';
-  element.style.cursor = 'pointer';
+function applyStyle(element, text, isHistoryItem = false) {
+  if (!isHistoryItem) {
+    element.style.padding = '20px 40px';
+    element.style.cursor = 'pointer';
+  }
   
   // setPropertyで!importantを使って強制適用
   if (text.startsWith("BB1")) {
@@ -223,7 +225,7 @@ function addToHistory(result) {
     li.style.marginBottom = '3px';
     li.style.marginLeft = '3px';
     li.style.marginRight = '3px';
-    applyStyle(li, item);
+    applyStyle(li, item, true); // isHistoryItem = true を追加
     historyList.appendChild(li);
   });
 }
